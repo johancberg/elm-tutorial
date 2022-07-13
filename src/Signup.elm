@@ -1,7 +1,9 @@
 module Signup exposing (User)
 
-import Html exposing (..)
-import Html.Attributes exposing (id, type_, style)
+import Css exposing (..)
+import Html.Styled exposing (..)
+import Html.Styled.Attributes exposing (..)
+import VirtualDom
 
 type alias User =
     { name : String
@@ -22,27 +24,28 @@ initialModel =
 view : User -> Html msg
 view user =
     div []
-        [ h1 [ style "padding-left" "3cm" ] [ text "Sign up" ]
-        , Html.form formStyle
+        [ h1 [ css [ paddingLeft (cm 3) ] ] [ text "Sign up" ]
+        , styledForm []
             [ div []
                 [ text "Name" 
-                , input ([ id "name", type_ "text" ] ++ inputStyle) []
+                , styledInput [ id "name", type_ "text" ] []
                 ]
             , div []
                 [ text "Email"
-                , input ([ id "email", type_ "email" ] ++ inputStyle) []
+                , styledInput [ id "email", type_ "email" ] []
                 ]
             , div []
                 [ text "Password"
-                , input ([ id "password", type_ "password" ] ++ inputStyle) []
+                , styledInput [ id "password", type_ "password" ] []
                 ]
             , div []
-                [ button ([ type_ "submit" ] ++ buttonStyle)
+                [ styledButton [ type_ "submit" ]
                     [ text "Create my account" ]
                 ]
             ]
         ]
 
+{--
 formStyle : List (Attribute msg)
 formStyle =
     [ style "border-radius" "5px"
@@ -74,7 +77,43 @@ buttonStyle =
     , style "border-radius" "4px"
     , style "font-size" "16px"
     ]
+--}
 
-main : Html msg
+styledForm : List (Attribute msg) -> List (Html msg) -> Html msg
+styledForm =
+    styled Html.Styled.form
+        [ borderRadius (px 5)
+        , backgroundColor (hex "#f2f2f2")
+        , padding (px 20)
+        , Css.width (px 300)
+        ]
+
+
+styledInput : List (Attribute msg) -> List (Html msg) -> Html msg
+styledInput =
+    styled Html.Styled.input
+        [ display block
+        , Css.width (px 260)
+        , padding2 (px 12) (px 20)
+        , margin2 (px 8) (px 0)
+        , border (px 0)
+        , borderRadius (px 4)
+        ]
+
+
+styledButton : List (Attribute msg) -> List (Html msg) -> Html msg
+styledButton =
+    styled Html.Styled.button
+        [ Css.width (px 300)
+        , backgroundColor (hex "#397cd5")
+        , color (hex "#fff")
+        , padding2 (px 14) (px 20)
+        , marginTop (px 10)
+        , border (px 0)
+        , borderRadius (px 4)
+        , fontSize (px 16)
+        ]
+
+main : VirtualDom.Node msg
 main =
-    view initialModel
+    toUnstyled <| view initialModel
