@@ -1,8 +1,10 @@
 module RandomNumber exposing (..)
 
-import Html exposing (..)
+import Css exposing (..)
+import Html.Styled exposing (..)
+import Html.Styled.Attributes exposing (..)
 import Random
-import Html.Events exposing (onClick)
+import Html.Styled.Events exposing (onClick)
 import Browser
 
 type alias Model =
@@ -14,7 +16,7 @@ init _ =
 
 view : Model -> Html Msg
 view model =
-    div []
+    div [ css [ textAlign center, backgroundColor (hex "#f2f2f2") ] ]
         [ button [ onClick GenerateRandomNumber ] [ text "Generate Random Number " ]
         , text (String.fromInt model)
         ]
@@ -35,7 +37,7 @@ main : Program () Model Msg
 main =
     Browser.element
         { init = init
-        , view = view
+        , view = view >> toUnstyled
         , update = update
         , subscriptions = \_ -> Sub.none
         }
