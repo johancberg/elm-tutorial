@@ -3,6 +3,7 @@ module HttpExamples exposing (..)
 import Http
 import Html exposing (..)
 import Html.Events exposing (onClick)
+import Browser
 
 type alias Model =
   List String
@@ -45,3 +46,23 @@ update msg model =
     case msg of
         SendHttpRequest ->
             ( model, getNicknames )
+
+        DataReceived (Ok nicknamesStr) ->
+            let
+                nicknames =
+                    String.split "," nicknamesStr
+            in
+            ( nicknames, Cmd.none )
+
+        DataReceived (Err _) ->
+            ( model, Cmd.none )
+
+
+main : Program () Model Msg
+main =
+    Browser.element
+        { init = \_ -> ( [], Cmd.none )
+        , view = view
+        , update = update
+        , subscriptions = \_ -> Sub.none
+        }
