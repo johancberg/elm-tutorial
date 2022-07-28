@@ -6,7 +6,17 @@ import Html.Events exposing (onClick)
 import Browser
 
 type alias Model =
-  List String
+    {   nicknames : List String
+    ,   errorMessage : Maybe String
+    }
+
+init : () -> ( Model, Cmd Msg )
+init _ =
+    ( { nicknames = []
+      , errorMessage = Nothing
+      }
+    , Cmd.none
+    )
 
 type Msg
     = SendHttpRequest
@@ -19,7 +29,7 @@ view model =
         [ button [ onClick SendHttpRequest ]
             [ text "Get data from server" ]
         , h3 [] [ text "Old School Main Characters" ]
-        , ul [] (List.map viewNickname model)
+        , ul [] (List.map viewNickname model.nicknames)
         ]
 
 
@@ -52,7 +62,7 @@ update msg model =
                 nicknames =
                     String.split "," nicknamesStr
             in
-            ( nicknames, Cmd.none )
+            ( { model | nicknames = nicknames }, Cmd.none )
 
         DataReceived (Err _) ->
             ( model, Cmd.none )
@@ -61,7 +71,7 @@ update msg model =
 main : Program () Model Msg
 main =
     Browser.element
-        { init = \_ -> ( [], Cmd.none )
+        { init = init
         , view = view
         , update = update
         , subscriptions = \_ -> Sub.none
