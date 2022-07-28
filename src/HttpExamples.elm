@@ -30,7 +30,7 @@ viewNickname nickname =
 
 url : String
 url =
-    "http://localhost:5016/old-school.txt"
+    "http://localhost:5016/Documents/elm-tutorial/server/old-school.txt"
 
 
 getNicknames : Cmd Msg
