@@ -1,7 +1,8 @@
-module Post exposing (Post, PostId, idToString, postDecoder, postsDecoder)
+module Post exposing (Post, PostId, idParser, idToString, postDecoder, postsDecoder)
 
 import Json.Decode as Decode exposing (Decoder, int, list, string)
 import Json.Decode.Pipeline exposing (required)
+import Url.Parser exposing (Parser, custom)
 
 
 type alias Post =
@@ -38,3 +39,10 @@ postDecoder =
 idToString : PostId -> String
 idToString (PostId id) =
     String.fromInt id
+
+
+idParser : Parser (PostId -> a) a
+idParser =
+    custom "POSTID" <|
+        \postId ->
+            Maybe.map PostId (String.toInt postId)
