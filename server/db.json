@@ -3,12 +3,15 @@
     {
       "id": 1,
       "title": "json-server",
-      "author": "typicode"
+      "authorName": "typicode",
+      "authorUrl": "http://localhost:8000"
+
     },
     {
       "id": 2,
       "title": "http-server",
-      "author": "indexzero"
+      "authorName": "indexzero",
+      "authorUrl": "http://localhost:8000"
     }
   ],
   "comments": [
