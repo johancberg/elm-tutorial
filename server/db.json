@@ -4,14 +4,13 @@
       "id": 1,
       "title": "json-server",
       "authorName": "typicode",
-      "authorUrl": "http://localhost:8000"
-
+      "authorUrl": "https://github.com/typicode"
     },
     {
       "id": 2,
       "title": "http-server",
       "authorName": "indexzero",
-      "authorUrl": "http://localhost:8000"
+      "authorUrl": "https://github.com/indexzero"
     }
   ],
   "comments": [
