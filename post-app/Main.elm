@@ -18,6 +18,7 @@ type alias Model =
 type Page
     = NotFoundPage
     | ListPage ListPosts.Model
+    | EditPage EditPost.Model
 
 
 type Msg
@@ -52,6 +53,13 @@ initCurrentPage ( model, existingCmds ) =
                             ListPosts.init
                     in
                     ( ListPage pageModel, Cmd.map ListPageMsg pageCmds )
+
+                Route.Post postId ->
+                    let
+                        ( pageModel, pageCmd ) =
+                            EditPost.init postId model.navKey
+                    in
+                    ( EditPage pageModel, Cmd.map EditPageMsg pageCmd )
     in
     ( { model | page = currentPage }
     , Cmd.batch [ existingCmds, mappedPageCmds ]
