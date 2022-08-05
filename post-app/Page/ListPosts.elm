@@ -19,8 +19,8 @@ type Msg
     | PostsReceived (WebData (List Post))
 
 
-init : () -> ( Model, Cmd Msg )
-init _ =
+init : ( Model, Cmd Msg )
+init =
     ( { posts = RemoteData.Loading }, fetchPosts )
 
 
@@ -50,7 +50,7 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    div []
+    div viewStyle
         [ button [ onClick FetchPosts ]
             [ text "Refresh posts" ]
         , viewPosts model.posts
@@ -130,3 +130,14 @@ buildErrorMessage httpError =
 
         Http.BadBody message ->
             message
+
+
+viewStyle : List (Attribute Msg)
+viewStyle =
+    [ style "display" "inline-block"
+    , style "position" "relative"
+    , style "top" "15vh"
+    , style "left" "50%"
+    , style "transform" "translateX(-50%)"
+    , style "text-align" "center"
+    ]
