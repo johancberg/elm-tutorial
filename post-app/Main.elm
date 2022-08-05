@@ -3,6 +3,7 @@ module Main exposing (main)
 import Browser exposing (Document, UrlRequest)
 import Browser.Navigation as Nav
 import Html exposing (..)
+import Page.EditPost as EditPost
 import Page.ListPosts as ListPosts
 import Route exposing (Route)
 import Url exposing (Url)
