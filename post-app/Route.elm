@@ -4,21 +4,6 @@ import Url exposing (Url)
 import Url.Parser exposing (..)
 
 
-type alias Url =
-    { protocol : Protocol
-    , host : String
-    , port_ : Maybe Int
-    , path : String
-    , query : Maybe String
-    , fragment : Maybe String
-    }
-
-
-type Protocol
-    = Http
-    | Https
-
-
 type Route
     = NotFound
     | Posts
