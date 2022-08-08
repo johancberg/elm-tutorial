@@ -93,7 +93,7 @@ viewPosts posts =
             div []
                 [ h3 [] [ text "Posts" ]
                 , table []
-                    ([ viewTableHeader ] ++ List.map viewPost actualPosts)
+                    (viewTableHeader :: List.map viewPost actualPosts)
                 ]
 
         RemoteData.Failure httpError ->
