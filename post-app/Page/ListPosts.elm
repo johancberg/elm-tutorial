@@ -5,8 +5,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import Http
-import Json.Decode as Decode
-import Post exposing (Post, PostId, postsDecoder)
+import Post exposing (Post, postsDecoder)
 import RemoteData exposing (WebData)
 
 
