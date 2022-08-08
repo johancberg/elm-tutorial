@@ -3,12 +3,13 @@ module Page.EditPost exposing (Model, Msg, init, update, view)
 import Browser.Navigation as Nav
 import Error exposing (buildErrorMessage)
 import Html exposing (..)
-import Html.Attributes exposing (..)
+import Html.Attributes exposing (type_, value)
 import Html.Events exposing (onClick, onInput)
 import Http
 import Post exposing (Post, PostId, postDecoder, postEncoder)
 import RemoteData exposing (WebData)
 import Route
+import Style exposing (viewStyle)
 
 
 type alias Model =
@@ -107,7 +108,7 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    div []
+    div viewStyle
         [ h3 [] [ text "Edit Post" ]
         , viewPost model.post
         , viewSaveError model.saveError

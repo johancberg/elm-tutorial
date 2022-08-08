@@ -2,11 +2,12 @@ module Page.ListPosts exposing (Model, Msg, init, update, view)
 
 import Error exposing (buildErrorMessage)
 import Html exposing (..)
-import Html.Attributes exposing (..)
+import Html.Attributes exposing (href)
 import Html.Events exposing (onClick)
 import Http
 import Post exposing (Post, postsDecoder)
 import RemoteData exposing (WebData)
+import Style exposing (viewStyle)
 
 
 type alias Model =
@@ -117,14 +118,3 @@ viewFetchError errorMessage =
         [ h3 [] [ text errorHeading ]
         , text ("Error: " ++ errorMessage)
         ]
-
-
-viewStyle : List (Attribute Msg)
-viewStyle =
-    [ style "display" "inline-block"
-    , style "position" "relative"
-    , style "top" "15vh"
-    , style "left" "50%"
-    , style "transform" "translateX(-50%)"
-    , style "text-align" "center"
-    ]
