@@ -1,6 +1,7 @@
-module Page.EditPost exposing (EditPageMsg, Model, init)
+module Page.EditPost exposing (EditPageMsg, Model, Msg, init, update, view)
 
 import Browser.Navigation as Nav
+import Error exposing (buildErrorMessage)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
@@ -195,25 +196,6 @@ viewSaveError maybeError =
 
         Nothing ->
             text ""
-
-
-buildErrorMessage : Http.Error -> String
-buildErrorMessage httpError =
-    case httpError of
-        Http.BadUrl message ->
-            message
-
-        Http.Timeout ->
-            "Server is taking too long to respond. Please try again later."
-
-        Http.NetworkError ->
-            "Unable to reach server."
-
-        Http.BadStatus statusCode ->
-            "Request failed with status code: " ++ String.fromInt statusCode
-
-        Http.BadBody message ->
-            message
 
 
 savePost : WebData Post -> Cmd Msg
