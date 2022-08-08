@@ -75,6 +75,10 @@ view model =
     div viewStyle
         [ button [ onClick FetchPosts ]
             [ text "Refresh posts" ]
+        , br [] []
+        , br [] []
+        , a [ href "/posts/new" ]
+            [ text "Create new post" ]
         , viewPosts model.posts
         , viewDeleteError model.deleteError
         ]
