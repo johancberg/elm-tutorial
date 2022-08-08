@@ -1,4 +1,4 @@
-module Page.EditPost exposing (EditPageMsg, Model, Msg, init, update, view)
+module Page.EditPost exposing (Model, Msg, init, update, view)
 
 import Browser.Navigation as Nav
 import Error exposing (buildErrorMessage)
@@ -97,7 +97,7 @@ update msg model =
                 post =
                     RemoteData.succeed postData
             in
-            ( { model | post = post, saveError = Nothing }, Route.pushUrl RoutePosts model.navKey )
+            ( { model | post = post, saveError = Nothing }, Route.pushUrl Route.Posts model.navKey )
 
         PostSaved (Err error) ->
             ( { model | saveError = Just (buildErrorMessage error) }

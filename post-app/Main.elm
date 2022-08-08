@@ -26,6 +26,7 @@ type Msg
     = ListPageMsg ListPosts.Msg
     | LinkClicked UrlRequest
     | UrlChanged Url
+    | EditPageMsg EditPost.Msg
 
 
 init : () -> Url -> Nav.Key -> ( Model, Cmd Msg )
@@ -99,6 +100,15 @@ update msg model =
             ( { model | route = newRoute }, Cmd.none )
                 |> initCurrentPage
 
+        ( EditPageMsg subMsg, EditPage pageModel ) ->
+            let
+                ( updatedPageModel, updatedCmd ) =
+                    EditPost.update subMsg pageModel
+            in
+            ( { model | page = EditPage updatedPageModel }
+            , Cmd.map EditPageMsg updatedCmd
+            )
+
         ( _, _ ) ->
             ( model, Cmd.none )
 
@@ -119,6 +129,10 @@ currentView model =
         ListPage pageModel ->
             ListPosts.view pageModel
                 |> Html.map ListPageMsg
+
+        EditPage pageModel ->
+            EditPost.view pageModel
+                |> Html.map EditPageMsg
 
 
 notFoundView : Html msg
