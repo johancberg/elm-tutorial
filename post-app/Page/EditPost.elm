@@ -2,7 +2,7 @@ module Page.EditPost exposing (Model, Msg, init, update, view)
 
 import Browser.Navigation as Nav
 import Error exposing (buildErrorMessage)
-import Html exposing (..)
+import Html exposing (Html, br, button, div, h3, input, text)
 import Html.Attributes exposing (type_, value)
 import Html.Events exposing (onClick, onInput)
 import Http

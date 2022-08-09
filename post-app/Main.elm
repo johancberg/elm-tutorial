@@ -2,7 +2,7 @@ module Main exposing (main)
 
 import Browser exposing (Document, UrlRequest)
 import Browser.Navigation as Nav
-import Html exposing (..)
+import Html exposing (Html, h3, text)
 import Page.EditPost as EditPost
 import Page.ListPosts as ListPosts
 import Page.NewPost as NewPost

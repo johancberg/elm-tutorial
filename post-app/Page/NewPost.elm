@@ -2,8 +2,8 @@ module Page.NewPost exposing (Model, Msg, init, update, view)
 
 import Browser.Navigation as Nav
 import Error exposing (buildErrorMessage)
-import Html exposing (..)
-import Html.Attributes exposing (..)
+import Html exposing (Html, br, button, div, h3, input, text)
+import Html.Attributes exposing (type_)
 import Html.Events exposing (onClick, onInput)
 import Http
 import Post exposing (Post, emptyPost, newPostEncoder, postDecoder)

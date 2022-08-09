@@ -1,7 +1,7 @@
 module Page.ListPosts exposing (Model, Msg, init, update, view)
 
 import Error exposing (buildErrorMessage)
-import Html exposing (..)
+import Html exposing (Html, a, br, button, div, h3, table, td, text, th, tr)
 import Html.Attributes exposing (href, type_)
 import Html.Events exposing (onClick)
 import Http
