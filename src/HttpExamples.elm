@@ -1,15 +1,17 @@
 module HttpExamples exposing (..)
 
-import Http
+import Browser
 import Html exposing (..)
 import Html.Events exposing (onClick)
-import Browser
-import Json.Decode exposing (Decoder, Error(..), decodeString, list, string)
+import Http
+import Json.Decode exposing (Decoder, Error(..), list, string)
+
 
 type alias Model =
-    {   nicknames : List String
-    ,   errorMessage : Maybe String
+    { nicknames : List String
+    , errorMessage : Maybe String
     }
+
 
 init : () -> ( Model, Cmd Msg )
 init _ =
@@ -18,6 +20,7 @@ init _ =
       }
     , Cmd.none
     )
+
 
 type Msg
     = SendHttpRequest
@@ -57,10 +60,10 @@ viewError errorMessage =
         errorHeading =
             "Couldn't fetch nicknames at this time."
     in
-        div []
-            [ h3 [] [ text errorHeading ]
-            , text ("Error: " ++ errorMessage)
-            ]
+    div []
+        [ h3 [] [ text errorHeading ]
+        , text ("Error: " ++ errorMessage)
+        ]
 
 
 viewNicknames : List String -> Html Msg
@@ -69,6 +72,7 @@ viewNicknames nicknames =
         [ h3 [] [ text "Old School Main Characters" ]
         , ul [] (List.map viewNickname nicknames)
         ]
+
 
 viewNickname : String -> Html Msg
 viewNickname nickname =
@@ -109,6 +113,7 @@ update msg model =
             , Cmd.none
             )
 
+
 handleJsonError : Json.Decode.Error -> Maybe String
 handleJsonError error =
     case error of
@@ -136,6 +141,7 @@ buildErrorMessage httpError =
 
         Http.BadBody message ->
             message
+
 
 main : Program () Model Msg
 main =

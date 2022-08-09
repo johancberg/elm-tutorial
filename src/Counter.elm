@@ -1,14 +1,18 @@
-module Counter exposing (Model)
+module Counter exposing (Model, main)
 
+import Browser
 import Html exposing (..)
 import Html.Events exposing (onClick)
-import Browser
+
 
 type alias Model =
     Int
 
+
 initialModel : Model
-initialModel = 0
+initialModel =
+    0
+
 
 view : Model -> Html Msg
 view model =
@@ -18,17 +22,21 @@ view model =
         , button [ onClick Increment ] [ text "+" ]
         ]
 
+
 type Msg
     = Increment
     | Decrement
+
 
 update : Msg -> Model -> Model
 update msg model =
     case msg of
         Increment ->
             model + 1
+
         Decrement ->
             model - 1
+
 
 main : Program () Model Msg
 main =

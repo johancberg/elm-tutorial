@@ -4,10 +4,9 @@ import Browser
 import Html exposing (..)
 import Html.Events exposing (onClick)
 import Http
-import Json.Decode as Decode
+import Json.Decode
     exposing
         ( Decoder
-        , decodeString
         , field
         , int
         , list
@@ -65,7 +64,7 @@ viewPosts posts =
     div []
         [ h3 [] [ text "Posts" ]
         , table []
-            ([ viewTableHeader ] ++ List.map viewPost posts)
+            (viewTableHeader :: List.map viewPost posts)
         ]
 
 
