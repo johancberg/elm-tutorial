@@ -49,10 +49,27 @@ decodeInterest =
                         Decode.succeed Food
 
                     "Sport" ->
-                        Decode.succeed (Sport Football)
+                        Decode.succeed (Sport decodeSport)
 
                     _ ->
                         Decode.fail "Not a valid interest, lol"
+            )
+
+
+decodeSport : Decoder Sport
+decodeSport =
+    Decode.field "sport" Decode.string
+        |> Decode.andThen
+            (\sport ->
+                case sport of
+                    "Football" ->
+                        Decode.succeed Football
+
+                    "Basketball" ->
+                        Decode.succeed Basketball
+
+                    _ ->
+                        Decode.fail (sport ++ " is not a sport, trololol")
             )
 
 
