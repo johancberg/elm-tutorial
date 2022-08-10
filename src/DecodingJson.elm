@@ -13,7 +13,7 @@ import Json.Decode
         , map3
         , string
         )
-import RemoteData exposing (RemoteData(..), WebData)
+import RemoteData exposing (WebData)
 
 
 type alias Post =

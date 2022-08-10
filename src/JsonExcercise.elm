@@ -29,6 +29,33 @@ type alias Article =
     }
 
 
+decoder : Decoder User
+decoder =
+    Decode.fail "Not implemented"
+
+
+decodeName : Decoder String
+decodeName =
+    Decode.field "name" Decode.string
+
+
+decodeInterest : Decoder Interest
+decodeInterest =
+    Decode.field "name" Decode.string
+        |> Decode.andThen
+            (\name ->
+                case name of
+                    "Food" ->
+                        Decode.succeed Food
+
+                    "Sport" ->
+                        Decode.succeed (Sport Football)
+
+                    _ ->
+                        Decode.fail "Not a valid interest, lol"
+            )
+
+
 testJson : String
 testJson =
     """
@@ -57,8 +84,3 @@ testJson =
     ]
 }
 """
-
-
-decoder : Decoder User
-decoder =
-    Decode.fail "Not implemented"
