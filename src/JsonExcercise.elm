@@ -39,6 +39,12 @@ decodeName =
     Decode.field "name" Decode.string
 
 
+decodeInterests : Decoder (List Interest)
+decodeInterests =
+    Decode.field "interests" Decode.string
+        |> (\_ -> Decode.list decodeInterest)
+
+
 decodeInterest : Decoder Interest
 decodeInterest =
     Decode.field "name" Decode.string
@@ -49,7 +55,7 @@ decodeInterest =
                         Decode.succeed Food
 
                     "Sport" ->
-                        Decode.succeed (Sport decodeSport)
+                        Decode.map Sport decodeSport
 
                     _ ->
                         Decode.fail "Not a valid interest, lol"
