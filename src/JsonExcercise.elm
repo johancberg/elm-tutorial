@@ -39,6 +39,17 @@ decodeName =
     Decode.field "name" Decode.string
 
 
+decodeArticles : Decoder (List Article)
+decodeArticles =
+    Decode.field "articles" Decode.string
+        |> (\_ -> Decode.list decodeArticle)
+
+
+decodeArticle : Decoder Article
+decodeArticle =
+    Decode.fail "not implemented"
+
+
 decodeInterests : Decoder (List Interest)
 decodeInterests =
     Decode.field "interests" Decode.string
