@@ -31,7 +31,10 @@ type alias Article =
 
 decoder : Decoder User
 decoder =
-    Decode.fail "Not implemented"
+    Decode.map3 User
+        (decodeName)
+        (decodeArticles)
+        (decodeInterests)
 
 
 decodeName : Decoder String
@@ -39,22 +42,22 @@ decodeName =
     Decode.field "name" Decode.string
 
 
-decodeArticles : Decoder (List Article)
+decodeArticles : Decoder (Dict String Article)
 decodeArticles =
-    Decode.field "articles" Decode.string
-        |> (\_ -> Decode.list decodeArticle)
-
+    Decode.list (Decode.map2 Tuple.pair (Decode.field "id" Decode.string) decodeArticle)
+        |> Decode.map Dict.fromList
 
 decodeArticle : Decoder Article
 decodeArticle =
     Decode.map3 Article
         (Decode.field "id" Decode.string)
         (Decode.field "content" Decode.string)
-        (Decode.map Set decodeSet)
+        (Decode.field "tags" (Decode.list decodeSet))
 
 decodeSet : Decoder String
 decodeSet =
-        (Decode.field "tag" Decode.string)
+     Decode.string
+
         
 
 decodeInterests : Decoder (List Interest)
