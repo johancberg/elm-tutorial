@@ -35,6 +35,7 @@ type Msg
     | StoreAuthorName String
     | StoreAuthorUrl String
     | CreatePost
+    | Cancel
     | PostCreated (Result Http.Error Post)
 
 
@@ -73,6 +74,9 @@ update msg model =
 
         CreatePost ->
             ( model, createPost model.post )
+        
+        Cancel ->
+            ( model, Route.pushUrl Route.Posts model.navKey )
 
         PostCreated (Ok post) ->
             ( { model | post = post, createError = Nothing }
@@ -118,6 +122,8 @@ newPostForm =
         , div []
             [ button [ type_ "button", onClick CreatePost ]
                 [ text "Submit" ]
+            , button [ type_ "button", onClick Cancel ]
+                [ text "Cancel" ]
             ]
         ]
 
