@@ -25,6 +25,7 @@ type Msg
     | UpdateAuthorName String
     | UpdateAuthorUrl String
     | SavePost
+    | Cancel
     | PostSaved (Result Http.Error Post)
 
 
@@ -92,6 +93,9 @@ update msg model =
 
         SavePost ->
             ( model, savePost model.post )
+        
+        Cancel ->
+            ( model, Route.pushUrl Route.Posts model.navKey )
 
         PostSaved (Ok postData) ->
             let
@@ -170,6 +174,8 @@ editForm post =
         , div []
             [ button [ type_ "button", onClick SavePost ]
                 [ text "Submit" ]
+            , button [ type_ "button", onClick Cancel ]
+                [ text "Cancel" ]
             ]
         ]
 
@@ -210,6 +216,27 @@ savePost post =
             in
             Http.request
                 { method = "PATCH"
+                , headers = []
+                , url = postUrl
+                , body = Http.jsonBody (postEncoder postData)
+                , expect = Http.expectJson PostSaved postDecoder
+                , timeout = Nothing
+                , tracker = Nothing
+                }
+
+        _ ->
+            Cmd.none
+
+cancel : WebData Post -> Cmd Msg
+cancel post =
+    case post of
+        RemoteData.Success postData ->
+            let
+                postUrl =
+                    "http://localhost:5019/posts"
+            in
+            Http.request
+                { method = "GET"
                 , headers = []
                 , url = postUrl
                 , body = Http.jsonBody (postEncoder postData)
