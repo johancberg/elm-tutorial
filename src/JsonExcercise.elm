@@ -49,10 +49,14 @@ decodeArticles =
 
 decodeArticle : Decoder Article
 decodeArticle =
+    Decode.fail "Not implemented"
+
+    {-
     Decode.map3 Article
         (Decode.field "id" Decode.string)
         (Decode.field "content" Decode.string)
         (Decode.field "tags" (Decode.list decodeSet))
+    -}
 
 decodeSet : Decoder String
 decodeSet =
