@@ -2,7 +2,7 @@ module Page.EditPost exposing (Model, Msg, init, update, view)
 
 import Browser.Navigation as Nav
 import Error exposing (buildErrorMessage)
-import Html exposing (Html, br, button, div, h3, input, text)
+import Html exposing (Html, br, button, div, h2, h3, input, text)
 import Html.Attributes exposing (type_, value)
 import Html.Events exposing (onClick, onInput)
 import Http
@@ -113,7 +113,7 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div viewStyle
-        [ h3 [] [ text "Edit Post" ]
+        [ h2 [] [ text "Edit Post" ]
         , viewPost model.post
         , viewSaveError model.saveError
         ]

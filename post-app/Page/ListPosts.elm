@@ -91,11 +91,11 @@ viewPosts posts =
             text ""
 
         RemoteData.Loading ->
-            h3 [] [ text "Loading..." ]
+            Html.h2 [] [ text "Loading..." ]
 
         RemoteData.Success actualPosts ->
             div []
-                [ h3 [] [ text "Posts" ]
+                [ Html.h2 [] [ text "Posts" ]
                 , table []
                     (viewTableHeader :: List.map viewPost actualPosts)
                 ]
