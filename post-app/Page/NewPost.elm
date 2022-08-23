@@ -8,6 +8,7 @@ import Html.Events exposing (onClick, onInput)
 import Http
 import Post exposing (Post, emptyPost, newPostEncoder, postDecoder)
 import Route
+import Style exposing (viewStyle)
 
 
 type alias Model =
@@ -91,7 +92,7 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    div []
+    div viewStyle
         [ h3 [] [ text "Create New Post" ]
         , newPostForm
         , viewError model.createError
