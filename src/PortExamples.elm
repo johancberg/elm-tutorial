@@ -1,4 +1,4 @@
-module PortExamples exposing (main)
+port module PortExamples exposing (main)
 
 import Browser
 import Html exposing (..)
@@ -25,15 +25,17 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         SendDataToJS ->
-            ( model, Cmd.none )
+            ( model, sendData "Hello JavaScript!" )
             
+
+port sendData : String -> Cmd msg
 
 
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( "", Cmd.none )
 
-
+    
 main : Program () Model Msg
 main =
     Browser.element
