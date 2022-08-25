@@ -17,6 +17,12 @@ test =
 
 -- Functor
 map : (a -> b) -> Tree a -> Tree b
+map func tree =
+    case tree of
+        Node str list ->
+            case List.head list of
+                Nothing -> Node (func str) []
+                Just edge  -> map func edge
 
 -- Monad
 andThen : (a -> Tree b) -> Tree a -> Tree b
