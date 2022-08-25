@@ -56,7 +56,7 @@ decodeArticle =
         (Decode.field "id" Decode.string)
         (Decode.field "content" Decode.string)
         (Decode.field "tags" (Decode.list decodeSet))
-    -}
+    TODO: Tags ska vara "decode.list decode.string"-}
 
 decodeSet : Decoder String
 decodeSet =
