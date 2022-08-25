@@ -35,6 +35,14 @@ fold func node tree =
     case tree of
         Node str list ->
             case (List.head list, List.tail list) of
-                (Nothing, _) -> node
-                (Just (Node head _), Nothing) -> fold func (func head node) (Node str [])
-                (Just (Node head _), Just tail) -> fold func (func head node) (Node str tail)
+                (Nothing, Just tail) ->
+                    fold func node (Node str tail)
+                
+                (Just (Node head []), Nothing) ->
+                    fold func (func head node) (Node str [])
+                
+                (Just (Node head _), Just tail) ->
+                    fold func (func head node) (Node str tail)
+                
+                _ ->
+                    func str node
