@@ -35,9 +35,17 @@ type alias Maybes a = List (Maybe a)
 
 
 -- Functor
-map : (a -> b) -> (Tree a -> Tree b) -- === (a -> b) -> (Tree a -> Tree b)
+map : (a -> b) -> Tree a -> Tree b -- === (a -> b) -> (Tree a -> Tree b)
 map func (Node str list) =
     Node (func str) (List.map (map func) list)
+
+    {- EARLIER WORK
+        case tree of
+        Node str list ->
+            case List.head list of
+                Nothing -> Node (func str) []
+                Just edge  -> map func edge
+    -}
 
     -- str: a
     -- list: List (Tree a)
@@ -56,6 +64,18 @@ map func (Node str list) =
 --Traversable
 fold : (a -> b -> b) -> b -> Tree a -> b
 fold func node (Node str list) =
+    {-
+    let
+        elem =
+            case list of
+                [] -> []
+                [x] -> [x]
+                x::_ -> [x]
+    in
+    
+    fold func node (List.foldl func node elem)
+    -}
+    
     case (List.head list, List.tail list) of
         (Just (Node head []), Nothing) ->
             fold func (func head node) (Node str [])
