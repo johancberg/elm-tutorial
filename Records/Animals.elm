@@ -1,17 +1,27 @@
-module Animals exposing (WildAnimals(..), Pets(..), animals)
+module Animals exposing (..)
 
 import Html exposing (Html)
+import Browser
+import Counter exposing (Model)
 
 type alias AnimalArgs item =
-    { order : WildAnimals
+    { items : List item
     , animalLabel : item -> String
     , animalId : item -> String
     , isAnimal : item -> Bool
     }
 
-type WildAnimals
-    = Wild (List WildAnimals)
-    | Pets (List Pets)
+init : AnimalArgs Pets
+init =
+    { items = [Cat, Dog, Fish]
+    , animalLabel = fromPet
+    , animalId = toPetId
+    , isAnimal = isPet
+    }
+
+type Animals
+    = WildAnimals WildAnimals
+    | Pets Pets
 
 type WildAnimals
     = Lion
@@ -23,7 +33,40 @@ type Pets
     | Dog
     | Fish
 
-animals : AnimalArgs item -> Html msg
+fromAnimal : Animals -> String
+fromAnimal a =
+    case a of
+        WildAnimals b ->
+            case b of
+                Lion -> "Lion"
+                Giraffe -> "Giraffe"
+                Dinosaur -> "Dinosaur"
+        Pets b ->
+            case b of
+                Dog -> "Dog"
+                Cat -> "Cat"
+                Fish -> "Fish"
+
+
+fromPet : Pets -> String
+fromPet a =
+    case a of
+        Dog -> "Dog"
+        Cat -> "Cat"
+        Fish -> "Fish"
+
+toPetId : Pets -> String
+toPetId a =
+    case a of
+        Dog -> "2"
+        Cat -> "1"
+        Fish -> "3"
+
+
+isPet : Pets -> Bool
+isPet _ = True
+
+animals : AnimalArgs item -> Html Msg
 animals args =
     let
         animal a =
@@ -36,4 +79,11 @@ animals args =
     
     Html.div
         []
-        [ animal.order ]
+        (List.map animal args.items)
+
+type Msg = Nothing
+
+update : Msg -> Model -> Model
+update a model =
+    case a of
+        Nothing -> model
