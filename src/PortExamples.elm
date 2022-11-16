@@ -8,8 +8,41 @@ import Json.Decode exposing (Error(..), Value, decodeValue, string)
 
 type alias Model =
     { dataFromJS : String
+    , dataToJS : ComplexData
     , jsonError : Maybe Error
     }
+
+
+type alias ComplexData =
+    { posts : List Post
+    , comments : List Comment
+    , profile : Profile
+    }
+
+
+type alias Post =
+    { id : Int
+    , title : String
+    , author : Author
+    }
+
+
+type alias Author =
+    { name : String
+    , url : String
+    }
+
+
+type alias Comment =
+    { id : Int
+    , body : String
+    , postId : Int
+    }
+
+
+type alias Profile =
+    { name : String }
+
 
 init : () -> ( Model, Cmd Msg )
 init _ =
@@ -19,7 +52,25 @@ init _ =
 initialModel : Model
 initialModel =
     { dataFromJS = ""
+    , dataToJS = complexData
     , jsonError = Nothing
+    }
+
+
+complexData : ComplexData
+complexData =
+    let
+        post1 =
+            Author "typicode" "https://github.com/typicode"
+                |> Post 1 "json-server"
+
+        post2 =
+            Author "indexzero" "https://github.com/indexzero"
+                |> Post 2 "http-server"
+    in
+    { posts = [ post1, post2 ]
+    , comments = [ Comment 1 "some comment" 1 ]
+    , profile = { name = "typicode" }
     }
 
 
@@ -80,7 +131,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         SendDataToJS ->
-            ( model, sendData "Hello JavaScript!" )
+            ( model, sendData model.dataToJS )
             
         ReceivedDataFromJS value ->
             case decodeValue string value of
@@ -91,7 +142,7 @@ update msg model =
                     ( { model | jsonError = Just error }, Cmd.none )
             
 
-port sendData : String -> Cmd msg
+port sendData : ComplexData -> Cmd msg
 port receiveData : (Value -> msg) -> Sub msg
 
 
