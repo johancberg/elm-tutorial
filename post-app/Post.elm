@@ -1,9 +1,10 @@
-module Post exposing (Post, PostId, emptyPost, idParser, idToString, newPostEncoder, postDecoder, postEncoder, postsDecoder)
+module Post exposing (Post, PostId, emptyPost, idParser, idToString, newPostEncoder, postDecoder, postEncoder, postsDecoder, savePosts)
 
 import Json.Decode as Decode exposing (Decoder, int, list, string)
 import Json.Decode.Pipeline exposing (required)
 import Json.Encode as Encode
 import Url.Parser exposing (Parser, custom)
+import Ports
 
 
 type alias Post =
@@ -85,3 +86,10 @@ newPostEncoder post =
         , ( "authorName", Encode.string post.authorName )
         , ( "authorUrl", Encode.string post.authorUrl )
         ]
+
+
+savePosts : List Post -> Cmd msg
+savePosts posts =
+    Encode.list postEncoder posts
+        |> Encode.encode 0
+        |> Ports.storePosts

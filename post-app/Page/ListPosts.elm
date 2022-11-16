@@ -5,7 +5,7 @@ import Html exposing (Html, a, br, button, div, h3, table, td, text, th, tr)
 import Html.Attributes exposing (href, type_)
 import Html.Events exposing (onClick)
 import Http
-import Post exposing (Post, PostId, postsDecoder)
+import Post exposing (Post, PostId, postsDecoder, savePosts)
 import RemoteData exposing (WebData)
 import Style exposing (viewStyle)
 
@@ -50,9 +50,18 @@ update msg model =
     case msg of
         FetchPosts ->
             ( { model | posts = RemoteData.Loading }, fetchPosts )
-
+        
         PostsReceived response ->
-            ( { model | posts = response }, Cmd.none )
+            let
+                savePostsCmd =
+                    case response of
+                        RemoteData.Success actualPosts ->
+                            savePosts actualPosts
+
+                        _ ->
+                            Cmd.none
+            in
+            ( { model | posts = response }, savePostsCmd )
 
         DeletePost postId ->
             ( model, deletePost postId )
